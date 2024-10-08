@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('profile', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('spesific_skill');
             $table->date('birth_date');
             $table->string('email');
             $table->string('phone');
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->longText('linkedin_url')->nullable();
             $table->longText('github_url')->nullable();
             $table->longText('youtube_url')->nullable();
-            $table->longText('profile_image');
+            $table->string('profile_image');
             $table->longText('description');
             $table->timestamps();
         });

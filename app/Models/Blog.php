@@ -13,6 +13,7 @@ class Blog extends Model
         'title',
         'image',
         'contents',
+        'link'
     ];
 
     protected $table = 'blog';

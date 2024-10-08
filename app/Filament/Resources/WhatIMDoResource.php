@@ -6,6 +6,7 @@ use App\Filament\Resources\WhatIMDoResource\Pages;
 use App\Filament\Resources\WhatIMDoResource\RelationManagers;
 use App\Models\WhatIMDo;
 use Filament\Forms;
+use Filament\Forms\Components\Radio;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -27,7 +28,9 @@ class WhatIMDoResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')->required(),
+                Forms\Components\TextInput::make('icon')->label('Icon (Font Awesome)')->required(),
+                Forms\Components\TextInput::make('description')->required(),
             ]);
     }
 
@@ -35,7 +38,9 @@ class WhatIMDoResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('icon'),
+                Tables\Columns\TextColumn::make('description'),
             ])
             ->filters([
                 //

@@ -27,9 +27,11 @@ class PortfolioResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')->required(),
-                Forms\Components\FileUpload::make('file upload')->nullable(),
-                Forms\Components\TextInput::make('url'),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\TextInput::make('part_of')->required(),
+                Forms\Components\TextInput::make('url')->nullable(),
+                Forms\Components\Textarea::make('description')->nullable(),
+                Forms\Components\FileUpload::make('file_upload')->nullable(),
+
 
             ]);
     }
@@ -39,7 +41,7 @@ class PortfolioResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('part_of'),
             ])
             ->filters([
                 //

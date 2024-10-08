@@ -28,6 +28,7 @@ class BlogResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('title')->required(),
                 Forms\Components\FileUpload::make('image')->nullable(),
+                Forms\Components\TextInput::make('link')->nullable(),
                 TinyEditor::make('contents')->columnSpan(2)->minHeight(500),
 
             ]);

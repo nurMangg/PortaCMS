@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/0faa490725.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -42,13 +43,13 @@
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Richard hanrick" width="80">
+          <img src="{{ url('storage/'.$Media->id.'/' .$Media->file_name) }}" alt="{{ $profile->name }}" width="80">
         </figure>
 
         <div class="info-content">
-          <h1 class="name" title="Richard hanrick">Richard hanrick</h1>
+          <h1 class="name" title="{{ $profile->name }}">{{ $profile->name }}</h1>
 
-          <p class="title">Web developer</p>
+          <p class="title">{{ $profile->spesific_skill }}</p>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
@@ -74,7 +75,7 @@
             <div class="contact-info">
               <p class="contact-title">Email</p>
 
-              <a href="mailto:richard@example.com" class="contact-link">richard@example.com</a>
+              <a href="mailto:{{ $profile->email }}" class="contact-link">{{ $profile->email }}</a>
             </div>
 
           </li>
@@ -88,7 +89,7 @@
             <div class="contact-info">
               <p class="contact-title">Phone</p>
 
-              <a href="tel:+12133522795" class="contact-link">+1 (213) 352-2795</a>
+              <a href="tel:{{ $profile->phone }}" class="contact-link">{{ $profile->phone }}</a>
             </div>
 
           </li>
@@ -102,7 +103,7 @@
             <div class="contact-info">
               <p class="contact-title">Birthday</p>
 
-              <time datetime="1982-06-23">June 23, 1982</time>
+              <time datetime="{{ $profile->birth_date }}">{{ $profile->birth_date }}</time>
             </div>
 
           </li>
@@ -116,7 +117,7 @@
             <div class="contact-info">
               <p class="contact-title">Location</p>
 
-              <address>Sacramento, California, USA</address>
+              <address>{{ $profile->address }}</address>
             </div>
 
           </li>
@@ -126,24 +127,53 @@
         <div class="separator"></div>
 
         <ul class="social-list">
+          @if ($profile->facebook_url != null)
+              <li class="social-item">
+                  <a href="{{ $profile->facebook_url }}" class="social-link" target="_blank" rel="noopener noreferrer">
+                      <ion-icon name="logo-facebook"></ion-icon>
+                  </a>
+              </li>
+          @endif
 
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
+          @if ($profile->twitter_url != null)
+              <li class="social-item">
+                  <a href="{{ $profile->twitter_url }}" class="social-link" target="_blank" rel="noopener noreferrer">
+                      <ion-icon name="logo-twitter"></ion-icon>
+                  </a>
+              </li>
+          @endif
 
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
+          @if ($profile->instagram_url != null)
+              <li class="social-item">
+                  <a href="{{ $profile->instagram_url }}" class="social-link" target="_blank" rel="noopener noreferrer">
+                      <ion-icon name="logo-instagram"></ion-icon>
+                  </a>
+              </li>
+          @endif
 
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
+          @if ($profile->linkedin_url != null)
+              <li class="social-item">
+                  <a href="{{ $profile->linkedin_url }}" class="social-link" target="_blank" rel="noopener noreferrer">
+                      <ion-icon name="logo-linkedin"></ion-icon>
+                  </a>
+              </li>
+          @endif
+
+          @if ($profile->github_url != null)
+              <li class="social-item">
+                  <a href="{{ $profile->github_url }}" class="social-link" target="_blank" rel="noopener noreferrer">
+                      <ion-icon name="logo-github"></ion-icon>
+                  </a>
+              </li>
+          @endif
+
+          @if ($profile->youtube_url != null)
+              <li class="social-item">
+                  <a href="{{ $profile->youtube_url }}" class="social-link" target="_blank" rel="noopener noreferrer">
+                      <ion-icon name="logo-youtube"></ion-icon>
+                  </a>
+              </li>
+          @endif
 
         </ul>
 
@@ -181,12 +211,19 @@
             <button class="navbar-link" data-nav-link>Portfolio</button>
           </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
+          @if ($Blog->count() > 0)
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Blog</button>
+            </li>
+          @endif
+
 
           <li class="navbar-item">
             <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Download</button>
           </li>
 
         </ul>
@@ -208,19 +245,7 @@
         </header>
 
         <section class="about-text">
-          <p>
-            I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media.
-            I enjoy
-            turning complex problems into simple, beautiful and intuitive designs.
-          </p>
-
-          <p>
-            My job is to build your website so that it is functional and user-friendly but at the same time attractive.
-            Moreover, I
-            add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring
-            across your
-            message and identity in the most creative way. I created web design for many famous brand companies.
-          </p>
+          {{ $profile->description }}
         </section>
 
 
@@ -233,71 +258,23 @@
           <h3 class="h3 service-title">What i'm doing</h3>
 
           <ul class="service-list">
-
+            @foreach ($WhatIMDo as $item)
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg
-                " alt="design icon" width="40">
+                 <i class="{{ $item->icon }}" style="color: #FFD43B; font-size: 50px"></i>
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web design</h4>
+                <h4 class="h4 service-item-title">{{ $item->title }}</h4>
 
                 <p class="service-item-text">
-                  The most modern and high-quality design made at a professional level.
+                  {{ $item->description }}
                 </p>
               </div>
 
             </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web development</h4>
-
-                <p class="service-item-text">
-                  High-quality development of sites at the professional level.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile apps</h4>
-
-                <p class="service-item-text">
-                  Professional development of applications for iOS and Android.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Photography</h4>
-
-                <p class="service-item-text">
-                  I make high-quality photos of any category at a professional level.
-                </p>
-              </div>
-
-            </li>
+            @endforeach
 
           </ul>
 
@@ -307,104 +284,35 @@
         <!--
           - testimonials
         -->
-
+        @if ($Testimonial->count() > 0)
         <section class="testimonials">
 
           <h3 class="h3 testimonials-title">Testimonials</h3>
 
           <ul class="testimonials-list has-scrollbar">
+            @foreach ($Testimonial as $item)
+              <li class="testimonials-item">
+                <div class="content-card" data-testimonials-item>
 
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
+                  <figure class="testimonials-avatar-box">
+                    <img src="{{ asset('home/images/avatar-1.png')}}" alt="Daniel lewis" width="60" data-testimonials-avatar>
+                  </figure>
 
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
+                  <h4 class="h4 testimonials-item-title" data-testimonials-title>{{ $item->name }}</h4>
 
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
+                  <div class="testimonials-text" data-testimonials-text>
+                    <p>
+                      {{ $item->description }}
+                    </p>
+                  </div>
 
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
                 </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
+              </li>
+            @endforeach
           </ul>
-
         </section>
+        @endif
+        
 
 
         <!--
@@ -456,51 +364,25 @@
           - clients
         -->
 
+        @if ($Client->count() > 0)
         <section class="clients">
 
           <h3 class="h3 clients-title">Clients</h3>
 
           <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
-            </li>
+            @foreach ($Client as $item)
+              <li class="clients-item">
+                <a href="#">
+                  <img src="{{ url('storage/'.$item->logo)}}" width="209px" height="131px" alt="client logo">
+                </a>
+              </li>
+            @endforeach
 
           </ul>
 
         </section>
+        @endif
+        
 
       </article>
 
@@ -530,46 +412,27 @@
 
           <ol class="timeline-list">
 
-            <li class="timeline-item">
+            @foreach ($Education as $item)
+              <li class="timeline-item">
 
-              <h4 class="h4 timeline-item-title">University school of the arts</h4>
+                <h4 class="h4 timeline-item-title">{{ $item->institution }}</h4>
 
-              <span>2007 — 2008</span>
+                <span>
+                  {{ $item->start_date }} — 
+                  @if ($item->end_date == null)
+                      Present
+                  @else
+                      {{ $item->end_date }}
+                  @endif
+              </span>
+              
 
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
+                <p class="timeline-text">
+                  {{ $item->description }}
+                </p>
 
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">New york academy of art</h4>
-
-              <span>2006 — 2007</span>
-
-              <p class="timeline-text">
-                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
-                omnis..
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">High school of art and design</h4>
-
-              <span>2002 — 2004</span>
-
-              <p class="timeline-text">
-                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
-                magni dolores
-                eos.
-              </p>
-
-            </li>
+              </li>
+            @endforeach
 
           </ol>
 
@@ -587,48 +450,28 @@
 
           <ol class="timeline-list">
 
-            <li class="timeline-item">
+            @foreach ($Experience as $item)
 
-              <h4 class="h4 timeline-item-title">Creative director</h4>
+              <li class="timeline-item">
 
-              <span>2015 — Present</span>
+                <h4 class="h4 timeline-item-title">{{ $item->position }} - {{ $item->company }}</h4>
 
-              <p class="timeline-text">
-                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
-                molestias
-                exceptur.
-              </p>
+                <span>
+                  {{ $item->start_date }} — 
+                  @if ($item->end_date == null)
+                      Present
+                  @else
+                      {{ $item->end_date }}
+                  @endif
+                </span>
 
-            </li>
+                <p class="timeline-text">
+                  {{ $item->description }}
+                </p>
 
-            <li class="timeline-item">
+              </li>
 
-              <h4 class="h4 timeline-item-title">Art director</h4>
-
-              <span>2013 — 2015</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Web designer</h4>
-
-              <span>2010 — 2013</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
+            @endforeach
           </ol>
 
         </section>
@@ -639,58 +482,21 @@
 
           <ul class="skills-list content-card">
 
-            <li class="skills-item">
+            @foreach ($Skills as $item)
+              <li class="skills-item">
 
-              <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="80">80%</data>
-              </div>
+                <div class="title-wrapper">
+                  <h5 class="h5">{{ $item->name }}</h5>
+                  <data value="{{ $item->percent }}">{{ $item->percent }}%</data>
+                </div>
 
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
+                <div class="skill-progress-bg">
+                  <div class="skill-progress-fill" style="width: {{ $item->percent }}%;"></div>
+                </div>
 
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">WordPress</h5>
-                <data value="50">50%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-
-            </li>
-
+              </li>
+            @endforeach
+            
           </ul>
 
         </section>
@@ -718,18 +524,11 @@
             <li class="filter-item">
               <button class="active" data-filter-btn>All</button>
             </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web design</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web development</button>
-            </li>
+            @foreach ($PartOf as $item)
+              <li class="filter-item">
+                <button data-filter-btn>{{ $item->part_of }}</button>
+              </li>
+            @endforeach
 
           </ul>
 
@@ -750,186 +549,36 @@
               <li class="select-item">
                 <button data-select-item>All</button>
               </li>
-
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
+              @foreach ($PartOf as $item)
+                <li class="filter-item">
+                  <button data-filter-btn>{{ $item->part_of }}</button>
+                </li>
+              @endforeach
 
             </ul>
 
           </div>
 
           <ul class="project-list">
+            @foreach ($Porto as $item)
+              <li class="project-item  active" data-filter-item data-category="{{ Str::lower($item->part_of)}}">
+                <a href="#">
 
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+                    <img src="{{ url('storage/'.$item->file_upload )}}" alt="{{ $item->title }}" loading="lazy">
+                  </figure>
 
-                  <img src="{{ asset('home/images/project-1.jpg')}}" alt="finance" loading="lazy">
-                </figure>
+                  <h3 class="project-title">{{ $item->title }}</h3>
 
-                <h3 class="project-title">Finance</h3>
+                  <p class="project-category">{{ $item->part_of }}</p>
 
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-2.png')}}" alt="orizon" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Orizon</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-3.jpg')}}" alt="fundo" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Fundo</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-4.png')}}" alt="brawlhalla" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Brawlhalla</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-5.png')}}" alt="dsm." loading="lazy">
-                </figure>
-
-                <h3 class="project-title">DSM.</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-6.png')}}" alt="metaspark" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">MetaSpark</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-7.png')}}" alt="summary" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Summary</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-8.jpg')}}" alt="task manager" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Task Manager</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="{{ asset('home/images/project-9.png')}}" alt="arrival" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Arrival</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
+                </a>
+              </li>
+            @endforeach
 
           </ul>
 
@@ -944,7 +593,7 @@
       <!--
         - #BLOG
       -->
-
+      @if ($Blog->count() > 0)
       <article class="blog" data-page="blog">
 
         <header>
@@ -954,180 +603,47 @@
         <section class="blog-posts">
 
           <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="{{ asset('home/images/blog-1.jpg')}}" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="{{ asset('home/images/blog-2.jpg')}}" alt="Best fonts every designer" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="{{ asset('home/images/blog-3.jpg')}}" alt="Design digest #80" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="{{ asset('home/images/blog-4.jpg')}}" alt="UI interactions of the week" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="{{ asset('home/images/blog-5.jpg')}}" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="{{ asset('home/images/blog-6.jpg')}}" alt="Design digest #79" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
+            @if ($Blog->count() > 0)
+              @foreach ($Blog as $item)
+                <li class="blog-post-item">
+                  <a href="@if($item->link) {{ $item->link }} @else # @endif" target="@if($item->link) _blank @else _self @endif">
+    
+                    <figure class="blog-banner-box">
+                      <img src="{{ asset('home/images/blog-1.jpg')}}" alt="Design conferences in 2022" loading="lazy">
+                    </figure>
+    
+                    <div class="blog-content">
+    
+                      <div class="blog-meta">
+                        <p class="blog-category">Design</p>
+    
+                        <span class="dot"></span>
+    
+                        <time datetime="2022-02-23">Fab 23, 2022</time>
+                      </div>
+    
+                      <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
+    
+                      <p class="blog-text">
+                        Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
+                      </p>
+    
+                    </div>
+    
+                  </a>
+                </li>
+              @endforeach
+            @else
+              <p>No Post Found</p>
+            @endif
+          
           </ul>
 
         </section>
 
       </article>
+      @endif
+      
 
 
 
@@ -1146,7 +662,7 @@
         <section class="mapbox" data-mapbox>
           <figure>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
+              src="{{ $Contact->link_maps }}"
               width="400" height="300" loading="lazy"></iframe>
           </figure>
         </section>
@@ -1158,6 +674,7 @@
           <form action="#" class="form" data-form>
 
             <div class="input-wrapper">
+              <input type="email" name="receive_email" class="form-input" placeholder="Email address" required data-form-input hidden value="{{ $Contact->receive_email }}">
               <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
 
               <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
@@ -1171,6 +688,60 @@
             </button>
 
           </form>
+
+        </section>
+
+      </article>
+
+      {{-- 
+        #DOWNLOAD 
+      --}}
+      <article class="download" data-page="download">
+
+        <header>
+          <h2 class="h2 article-title">Download</h2>
+        </header>
+
+        <section class="blog-posts">
+
+          <ul class="blog-posts-list">
+            @foreach ($Download as $item)
+            <li class="blog-post-item">
+              <a href="{{ url('storage/'.$item->upload)}}" target="_blank" download>
+
+                <figure class="blog-banner-box">
+                  <img src="{{ url('storage/'.$item->cover_image)}}" alt="{{ $item->title }}" loading="lazy">
+
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Portfolio</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="{{ $item->updated_at }}">{{ $item->updated_at }}</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">{{ $item->title }}</h3>
+
+                  <p class="blog-text">
+                    {{ $item->short_description }}
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+            @endforeach
+            
+
+          
+
+          
+
+          </ul>
 
         </section>
 

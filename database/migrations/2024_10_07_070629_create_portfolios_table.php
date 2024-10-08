@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('portfolio', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('file_upload');
-            $table->string('url');
-            $table->longText('description');
+            $table->string('part_of');
+            $table->string('file_upload')->nullable();
+            $table->string('url')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('portfolios');
+        Schema::dropIfExists('portfolio');
     }
 };

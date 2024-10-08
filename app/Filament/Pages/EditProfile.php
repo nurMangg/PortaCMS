@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\User;
 use Filament\Pages\Page;
 use Filament\Forms;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,7 @@ class EditProfile extends Page
 
     public function save()
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
 
         // Validasi dan update profil user
         $user->update([

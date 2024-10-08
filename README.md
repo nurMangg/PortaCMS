@@ -1,3 +1,5 @@
+![PortaCMS](https://github.com/user-attachments/assets/66646522-7382-48cd-b376-ff81ea94d332)
+
 
 # PORTA CMS
 
@@ -8,8 +10,9 @@ PortaCMS is a custom-built content management system (CMS) designed specifically
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshoot Portfolio](https://github.com/user-attachments/assets/69f6eb4e-35cb-472e-a6d2-e12894a32d5e)
 
+![APP Screenshoot CMS](https://github.com/user-attachments/assets/ffd05a92-a1de-4eb3-bb07-d3773ebf3723)
 
 ## Documentation
 

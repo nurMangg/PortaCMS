@@ -66,6 +66,7 @@ class Profiles extends Page
 }
 
 
+
 public function save(): void
 {
     $profile = Profile::first();

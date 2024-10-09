@@ -10,6 +10,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Portfolio;
 use App\Models\Profile;
+use App\Models\Site;
 use App\Models\Skills;
 use App\Models\Testimonial;
 use App\Models\WhatIMDo;
@@ -34,7 +35,8 @@ class IndexController extends Controller
         $Download = Download::all();
         $Contact = Contact::first();
         $Media = DB::table('media')->first();
-
-        return view('index', compact('profile', 'Media', 'WhatIMDo', 'Education', 'Experience', 'PartOf', 'Client', 'Skills', 'Porto', 'Blog', 'Testimonial', 'Download', 'Contact'));
+        $Site = Site::first();
+        
+        return view('index', compact('Site','profile', 'Media', 'WhatIMDo', 'Education', 'Experience', 'PartOf', 'Client', 'Skills', 'Porto', 'Blog', 'Testimonial', 'Download', 'Contact'));
     }
 }

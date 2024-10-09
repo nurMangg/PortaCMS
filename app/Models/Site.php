@@ -15,6 +15,8 @@ class Site extends Model
         'name',
         'favicon',
         'color',
+        'gradient1',
+        'gradient2'
     ];
 
     protected $table = 'site_settings';

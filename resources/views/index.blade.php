@@ -24,6 +24,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0faa490725.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+        --orange-yellow-crayola: {{ $Site->color }}; /* Menyimpan warna sebagai variabel CSS */
+        --bg-gradient-yellow-1: linear-gradient(
+          to bottom right, 
+          hsl(45, 100%, 71%) 0%, 
+          hsla(36, 100%, 69%, 0) 50%
+        );
+        --bg-gradient-yellow-2: linear-gradient(
+          135deg, 
+          hsla(45, 100%, 71%, 0.251) 0%, 
+          hsla(35, 100%, 68%, 0) 59.86%
+        ), hsl(240, 2%, 13%);
+        --text-gradient-yellow: linear-gradient(
+          to right, 
+          {{ $Site->gradient1 }}, 
+          {{ $Site->gradient2 }}
+        );
+        --vegas-gold: {{ $Site->color }};
+    }
+</style>
+
 </head>
 
 <body>
@@ -262,7 +285,7 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                 <i class="{{ $item->icon }}" style="color: #FFD43B; font-size: 50px"></i>
+                 <i class="{{ $item->icon }}" style="color: {{ $Site->color }}; font-size: 50px"></i>
               </div>
 
               <div class="service-content-box">

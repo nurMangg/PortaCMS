@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('favicon')->nullable();
             $table->string('color')->nullable();
+            $table->string('gradient1')->nullable();
+            $table->string('gradient2')->nullable();
             $table->timestamps();
         });
     }

@@ -19,6 +19,9 @@ class SitesettingSeeder extends Seeder
             'name' => 'PortaCMS',
             'favicon' => null,
             'color' => 'hsl(45, 100%, 72%)',
+            'gradient1' => 'hsl(45, 100%, 72%)',
+            'gradient2' => 'hsl(45, 100%, 72%)',
+
         ]);
     }
 }
